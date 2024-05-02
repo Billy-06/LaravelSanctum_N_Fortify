@@ -20,7 +20,33 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        //     public function toResponse($request)
+        //     {
+        //         if($request->wantsJson()) {
+        //             $user = User::where('email', $request->email)->first();
+        //             return response()->json([
+        //                 "message" => "Login successful",
+        //                 'token' => $user->createToken('auth_token')->plainTextToken
+        //             ]);
+        //         }
+        //         return redirect()->intended(Fortify::redirects('login'));
+        //     }
+        // });
+
+        // $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+        //     public function toResponse($request)
+        //     {
+        //         if($request->wantsJson()) {
+        //             $user = User::where('email', $request->email)->first();
+        //             return response()->json([
+        //                 "message" => "Registration successful",
+        //                 'token' => $user->createToken('auth_token')->plainTextToken
+        //             ]);
+        //         }
+        //         return redirect()->intended(Fortify::redirects('register'));
+        //     }
+        // });
     }
 
     /**
@@ -38,6 +64,7 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($throttleKey);
         });
+
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
